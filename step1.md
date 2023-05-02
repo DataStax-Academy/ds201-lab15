@@ -40,12 +40,30 @@ nodetool status
 watch -n 1 -d "ls -lh node/data/commitlog"
 ```
 
+```
+### term2
+[ctrl-c]
+```
+
+This will refresh the contents of the commit log directory every second so that you can see what happens to the commit log files.
+
+
+Don’t do it now, but keep in mind you’ll need to press *CTRL-C* to exit the watch.
+
 ✅ In *terminal-one*, run *cassandra-stress* to write several hundreds of thousands of rows to our node:
 ```
 ./node/tools/bin/cassandra-stress \ write no-warmup n=250000 -port native=9042 -rate threads=1
 ```
 
-✅ 
+There are a few things to watch for in *terminal-two* while *cassandra-stress* inserts rows:
+
+*	The total size will continue to increase.
+*	The timestamp will change for the current segment being written.
+*	You may get additional commit log files as well.
+
+✅ When cassandra-stress completes, terminate the watch on the second terminal by pressing CTRL-C.
+
+
 ✅ 
 ✅ 
 ✅ 
