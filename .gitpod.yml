@@ -1,0 +1,22 @@
+image: gitpod/workspace-full:2023-02-27-14-39-56
+tasks:
+  - name: install-dependencies
+    before: |
+      printf 'unset JAVA_TOOL_OPTIONS\n' >> $HOME/.bashrc
+      printf 'export PATH="/workspace/ds201-lab15/node/bin:$PATH"' >> $HOME/.bashrc
+    init: |
+      curl https://dlcdn.apache.org/cassandra/4.1.0/apache-cassandra-4.1.0-bin.tar.gz \
+        --output apache-cassandra-4.1.0-bin.tar.gz
+      tar xf apache-cassandra-4.1.0-bin.tar.gz
+      mv apache-cassandra-4.1.0 node
+    command: | 
+      ./node/bin/cassandra
+github:
+  prebuilds:
+    main: true
+ports:
+  - port: 1-9999
+    onOpen: ignore
+vscode:
+   extensions:
+    - https://github.com/DataStax-Academy/katapod/releases/download/stable/katapod-stable.vsix
