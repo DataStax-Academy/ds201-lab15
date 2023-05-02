@@ -2,13 +2,30 @@
   "layout": {
     "terminals": [
       {
-        "id": "cqlsh",
-        "name": "cqlsh-editor"
+        "id": "term1",
+        "name": "terminal-one"
       },
       {
-        "id": "termTwo",
-        "name": "terminal-number-two"
+        "id": "term2",
+        "name": "terminal-two"
       }
     ]
+  },
+  "navigation": {
+    "onLoadCommands": {
+      "intro": {
+        "term1": [
+          {
+            "command": "./wait.sh"
+          }
+        ],
+        "term2": [
+          {
+            "command": "echo -n 'Hello, World!'"
+          }
+        ]
+      }
+    }
   }
+
 }
