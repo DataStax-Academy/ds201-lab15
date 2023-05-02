@@ -40,13 +40,6 @@ nodetool status
 watch -n 1 -d "ls -lh node/data/commitlog"
 ```
 
-
-```
-### {"terminalId": "term2", "macrosBefore": ["ctrl_c"]}
-CTRL-C
-```
-
-
 This will refresh the contents of the commit log directory every second so that you can see what happens to the commit log files.
 
 
@@ -65,6 +58,10 @@ There are a few things to watch for in *terminal-two* while *cassandra-stress* i
 
 ✅ When cassandra-stress completes, terminate the watch on the second terminal by pressing CTRL-C.
 
+```
+### term2"
+["ctrl_c"]
+```
 
 ✅ 
 ✅ 
