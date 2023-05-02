@@ -47,7 +47,7 @@ Don’t do it now, but keep in mind you’ll need to press *CTRL-C* to exit the 
 
 ✅ In *terminal-one*, run *cassandra-stress* to write several hundreds of thousands of rows to our node:
 ```
-./node/tools/bin/cassandra-stress \ write no-warmup n=250000 -port native=9042 -rate threads=1
+./node/tools/bin/cassandra-stress write no-warmup n=250000 -port native=9042 -rate threads=1
 ```
 
 There are a few things to watch for in *terminal-two* while *cassandra-stress* inserts rows:
