@@ -59,8 +59,8 @@ There are a few things to watch for in *terminal-two* while *cassandra-stress* i
 ✅ When cassandra-stress completes, terminate the watch on the second terminal by pressing CTRL-C.
 
 ```
-### {“terminalId”: “term2", “macrosBefore”: [“ctrl_c”]}
-echo “ctrl-c”
+### {"terminalId": "term2", "macrosBefore": ["ctrl_c"]}
+echo "ctrl-c"
 ```
 
 ✅ 
