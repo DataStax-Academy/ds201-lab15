@@ -38,7 +38,7 @@ nodetool status
 
 ```
 ### term2
-watch -n 1 -d "ls -lh node/data/commit-log"
+watch -n 1 -d "ls -lh node/data/commitlog"
 ```
 
 ✅ Shut down one of the replica nodes for the *cassandra* partition by running `nodetool stopdaemon`:
