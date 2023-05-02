@@ -1,0 +1,14 @@
+{
+  "layout": {
+    "terminals": [
+      {
+        "id": "cqlsh",
+        "name": "cqlsh-editor"
+      },
+      {
+        "id": "termTwo",
+        "name": "terminal-number-two"
+      }
+    ]
+  }
+}
