@@ -28,9 +28,11 @@
 nodetool status
 ```
 
-✅ Use `nodetool getendpoints` to determine which nodes hold the replicas for the cassandra partition tag value in the *videos_by_tag* table:
+✅ In the *terminal-two*, execute the following command:
+
 ```
-./node1/bin/nodetool getendpoints killrvideo videos_by_tag 'cassandra'
+### terminal-two
+wattch -n 1 -d "ls -lh node/data/commit-log"
 ```
 
 ✅ Shut down one of the replica nodes for the *cassandra* partition by running `nodetool stopdaemon`:
