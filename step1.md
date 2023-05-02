@@ -42,8 +42,8 @@ watch -n 1 -d "ls -lh node/data/commitlog"
 
 
 ```
-### term2
-[ctrl-c]
+### term2 
+["ctrl_c"]
 ```
 
 
