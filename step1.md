@@ -40,11 +40,6 @@ nodetool status
 watch -n 1 -d "ls -lh node/data/commitlog"
 ```
 
-```
-### term2
-[ctrl-c]
-```
-
 This will refresh the contents of the commit log directory every second so that you can see what happens to the commit log files.
 
 
