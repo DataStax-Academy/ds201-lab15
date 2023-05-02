@@ -28,11 +28,17 @@
 nodetool status
 ```
 
-✅ In the *terminal-two*, execute the following command:
+✅ In *terminal-two*, execute the following command:
+
+---
+**Note:** Clicking on the command below will automatically execute it in *terminal-two*. 
+
+---
+
 
 ```
-### terminal-two
-wattch -n 1 -d "ls -lh node/data/commit-log"
+### term2
+watch -n 1 -d "ls -lh node/data/commit-log"
 ```
 
 ✅ Shut down one of the replica nodes for the *cassandra* partition by running `nodetool stopdaemon`:
