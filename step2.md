@@ -25,9 +25,9 @@
 
 ✅ Execute the following *nodetool* command:
 ```
-nodetool keyspace1.standard1
+nodetool tablestats keyspace1.standard1
 ```
-*cassandra-stress* created *keyspace1* and the *standard1* table and populated its data. Running *nodetool* tablestats gives you the statistics for that table. 
+*cassandra-stress* created *keyspace1* and the *standard1* table and populated its data. Running *nodetool tablestats* gives you the statistics for that table. 
 
 Output
 ```
@@ -66,7 +66,7 @@ nodetool flush
 
 ✅ Check the statistics for the *keyspace1.standard1* table again by executing:
 ```
-nodetool keyspace1.standard1
+nodetool tablestats keyspace1.standard1
 ```
 
 Confirm that the Memtable statistics have zeroed out because we flushed the previous memtable to disk.
