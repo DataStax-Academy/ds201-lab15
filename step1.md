@@ -20,7 +20,7 @@
 
 <!-- CONTENT -->
 
-<div class="step-title">Shut down a node an delete it's data files</div>
+<div class="step-title">Watch the <i>commit log</i> directory as you insert rows</div>
 
 ✅ Check that the node is up and running:
 
@@ -63,11 +63,6 @@ There are a few things to watch for in *terminal-two* while *cassandra-stress* i
 echo "ctrl-c"
 ```
 
-✅ 
-✅ 
-✅ 
-✅ 
-✅ 
 <!-- NAVIGATION -->
 <div id="navigation-bottom" class="navigation-bottom">
  <a href='command:katapod.loadPage?[{"step":"intro"}]'

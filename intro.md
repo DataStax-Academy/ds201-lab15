@@ -21,12 +21,12 @@
           <div class="scenario-objectives">In this hands-on lab, you will:</div>
             <ul>
               <li><span class="scenario-objective">Watch the commit log as data is written to the database</span></li>
-              <li><span class="scenario-objective">Use nodetool to view statistics for a CQL table</span></li>
+              <li><span class="scenario-objective">Use <i>nodetool</i> to view statistics for a CQL table</span></li>
               <li><span class="scenario-objective">Force data that has been written in memory to flush to disk</span></li>
               <li><span class="scenario-objective">Look for commit log segments being replayed when starting a node</span></li>
             </ul>
             <p>
-              Consistency is the tricky challenge for distributed systems. As distributed systems trade-off consistency for performance, some of the nodes in a cluster may become inconsistent. When Cassandra notices these inconsistencies, it takes steps to resolve them. This resolution is the role of Write Path.
+              Cassandra has an optimized write path. It can be very helpful to understand the write path to make use of Cassandra effectively.   
             </p>
           </div>  
           <a href='command:katapod.loadPage?[{"step":"step1"}]' class="btn btn-primary btn-cassandra">

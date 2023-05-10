@@ -21,80 +21,98 @@
 
 <!-- CONTENT -->
 
-<div class="step-title">Observe a Write Path</div>
+<div class="step-title">Observe the <i>memtables</i> and <i>commit log</i> before and after a <i>flush</i></div>
 
-✅ Shutdown the second replica node for the *cassandra* partition:
+✅ Execute the following *nodetool* command:
+```
+nodetool keyspace1.standard1
+```
+*cassandra-stress* created *keyspace1* and the *standard1* table and populated its data. Running *nodetool* tablestats gives you the statistics for that table. 
 
-Wait for the node to shutdown.
-
-✅ Restart the first node you shut down:
-
-✅ Start *cqlsh* and connect to a running node:
-
-What do you think will happen when you try to retrieve the *cassandra* partition from the *videos_by_tag* table now?
-
-<details class="katapod-details">
-  <summary>Answer</summary>
-  The query should return *no data* since you deleted the *data* files for the replica you started and the other replica is not running.
-</details>
-<br>
-
-✅ Run the query:
-```cql
-SELECT * FROM killrvideo.videos_by_tag WHERE tag = 'cassandra';
+Output
+```
+### {"execute":false}
+Total number of tables: 59
+----------------
+Keyspace : keyspace1
+        Read Count: 0
+        Read Latency: NaN ms
+        Write Count: 250000
+        Write Latency: 0.013440336 ms
+        Pending Flushes: 0
+                Table: standard1
+                SSTable count: 2
+                Space used (live): 59575885
+                Space used (total): 59575885
+                Space used by snapshots (total): 0
+                Off heap memory used (total): 699116
+                SSTable Compression Ratio: -1.0
+                Number of partitions (estimate): 252290
+                Memtable cell count: 1180
+                Memtable data size: 319780
+                Memtable off heap memory used: 388020
+                Memtable switch count: 11
+                ...
 ```
 
-✅ Quit *cqlsh*:
-```cql
-QUIT
+Check that the *Write Count* matches the number of rows we told *cassandra-stress* to insert. *nodetool tablestats* also reports the number of SSTables, space used, and bloom filter statistics.
+
+✅ Make note of the Memtable statistics in the nodetool tablestats output. Specifically, the memtable for the *keyspace1.standard1* table is not empty.
+
+✅ Execute the following *nodetool* command to flush the memtable content of all tables in all keyspaces to disk:
+```
+nodetool flush
 ```
 
-✅ Restart the other replica node:
-
-✅ Start *cqlsh*: 
+✅ Check the statistics for the *keyspace1.standard1* table again by executing:
 ```
-./node1/bin/cqlsh
+nodetool keyspace1.standard1
 ```
 
-✅ Set the consistncy level to `TWO`:
-<details class="katapod-details">
-  <summary>Solution</summary>
+Confirm that the Memtable statistics have zeroed out because we flushed the previous memtable to disk.
 
-```cql
-CONSISTENCY TWO;
+Output
+```
+### {"execute":false}
+      ...
+      Memtable cell count: 0
+      Memtable data size: 0
+      Memtable off heap memory used: 0
+      Memtable switch count: 12
+      ...
 ```
 
-</details>
-<br>
-
-A consistency level of `TWO` will cause the coordinator to read both replicas, calculate the checksum of the results, and then check if the data is not in sync between the two replica nodes. If not in sync, Cassandra will then invoke a Write Path to replace the parts of the data on the nodes that has the oldest data writetime, or that lacks data completely (especially if someone deleted the data directory).
-
-✅ Execute the following query:
-```cql
-SELECT * FROM killrvideo.videos_by_tag WHERE tag = 'cassandra';
+✅ Run the following commands to shut down the node and clear out the system logs:
 ```
-It should return the rows in the *cassandra* partition:
-
-✅ Quit *cqlsh*:
-```cql
-QUIT
+nodetool stopdaemon
+rm -f ./node/logs/*.log
 ```
 
-✅ Shutdown the replica node whose data files you **did not delete**:
-
-✅ Start *cqlsh*:
-
-✅ Verify that the consistency level is `ONE`:
-```cql
-CONSISTENCY;
+✅ Start up the node again using the following command:
+```
+cassandra
 ```
 
-✅ Execute the following query:
-```cql
-SELECT * FROM killrvideo.videos_by_tag WHERE tag = 'cassandra';
+Wait for the node to finish starting up before continuing.
+
+✅ Open the *system.log* file, located at ~/node/logs/system.log, using a command-line editor. 
+```
+nano ~/node/logs/system.log
 ```
 
-This time we get our data because the previous invocation of the query caused a Write Path  writing data to the *videos_by_tag* table for the node with the deleted data files!
+✅ In the system.log, look for messages that includes the word *CommitLog.java*. 
+
+```
+### {"execute":false}
+... CommitLog.java:194 - Replaying /home/ubuntu/node/data/commit-log/CommitLog-680-1586320327793.log, /home/ubuntu/node/data/commit-log/CommitLog-680-1586320327794.log
+... CommitLog.java:196 - Log replay complete, 37 replayed mutations
+```
+
+If there are existing commit log files while Cassandra is starting up, it will replay the mutations in those logs into memtables and then automatically flush the memtables to disk.
+
+If there happen to be no commit log segments found during start up, then no replay needs to be done. 
+
+
 
 <!-- NAVIGATION -->
 <div id="navigation-bottom" class="navigation-bottom">
